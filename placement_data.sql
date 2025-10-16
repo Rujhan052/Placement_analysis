@@ -1,3 +1,17 @@
+
+-- Cleaning the CTC format
+SELECT
+    Industry,
+    CTC, 
+    CASE
+        WHEN CTC LIKE '%LPA%' THEN CAST(REPLACE(UPPER(TRIM(CTC)), 'LPA', '') AS DECIMAL(10, 2)) * 100000
+        WHEN CTC LIKE '%,%' THEN CAST(REPLACE(TRIM(CTC), ',', '') AS DECIMAL(10, 2)) 
+        ELSE CAST(TRIM(CTC) AS DECIMAL(10, 2)) * 100000
+    END AS standardized_ctc
+FROM
+    placement_data;
+
+
 -- Total offers 
 SELECT COUNT(*) AS total_offers
 FROM placement_data;
